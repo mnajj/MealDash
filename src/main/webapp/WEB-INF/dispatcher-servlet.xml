@@ -2,9 +2,9 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:context="http://www.springframework.org/schema/context"
 			 xmlns:mvc="http://www.springframework.org/schema/mvc"
+			 xmlns:tx="http://www.springframework.org/schema/tx"
 			 xmlns="http://www.springframework.org/schema/beans"
-			 xsi:schemaLocation="
-      	http://www.springframework.org/schema/beans
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans
        	http://www.springframework.org/schema/beans/spring-beans.xsd
        	http://www.springframework.org/schema/context
        	http://www.springframework.org/schema/context/spring-context.xsd
@@ -17,6 +17,35 @@
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	<bean id="dataSource"
+				class="com.mchange.v2.c3p0.ComboPooledDataSource"
+				destroy-method="close">
+		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name="jdbcUrl"
+							value="jdbc:sqlserver://localhost:1433;databaseName=MealDash;integratedsecurity=true"/>
+		<property name="minPoolSize" value="5"/>
+		<property name="maxPoolSize" value="20"/>
+		<property name="maxIdleTime" value="30000"/>
+	</bean>
+
+	<bean id="sessionFactory"
+				class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="packagesToScan" value="com.mealdash.models"/>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+				class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!--	<bean-->
 	<!--			id="messageSource"-->
 	<!--			class="org.springframework.context.support.ResourceBundleMessageSource">-->
