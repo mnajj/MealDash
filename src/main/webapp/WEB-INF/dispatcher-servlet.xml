@@ -4,12 +4,13 @@
 			 xmlns:mvc="http://www.springframework.org/schema/mvc"
 			 xmlns:tx="http://www.springframework.org/schema/tx"
 			 xmlns="http://www.springframework.org/schema/beans"
-			 xsi:schemaLocation="http://www.springframework.org/schema/beans
-       	http://www.springframework.org/schema/beans/spring-beans.xsd
-       	http://www.springframework.org/schema/context
-       	http://www.springframework.org/schema/context/spring-context.xsd
-       	http://www.springframework.org/schema/mvc
-       	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+				http://www.springframework.org/schema/context
+				http://www.springframework.org/schema/context/spring-context-3.1.xsd
+				http://www.springframework.org/schema/tx
+				http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+				http://www.springframework.org/schema/mvc
+				http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 	<context:component-scan base-package="com.mealdash.controllers"/>
 	<mvc:annotation-driven/>
@@ -27,11 +28,10 @@
 		<property name="maxPoolSize" value="20"/>
 		<property name="maxIdleTime" value="30000"/>
 	</bean>
-
 	<bean id="sessionFactory"
 				class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan" value="com.mealdash.models"/>
+		<property name="packagesToScan" value="com.mealdash.entities"/>
 
 		<property name="hibernateProperties">
 			<props>
@@ -46,6 +46,7 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/>
 	<!--	<bean-->
 	<!--			id="messageSource"-->
 	<!--			class="org.springframework.context.support.ResourceBundleMessageSource">-->
