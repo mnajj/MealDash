@@ -1,1 +1,1 @@
-alert("TEST!");
+alert("Static serving works!");
