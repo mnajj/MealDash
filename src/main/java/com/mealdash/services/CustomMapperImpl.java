@@ -1,5 +1,6 @@
 package com.mealdash.services;
 
+import com.mealdash.entities.CartItem;
 import com.mealdash.entities.MenuItem;
 import com.mealdash.interfaces.services.CustomMapper;
 import com.mealdash.viewsModels.MenuItemsListModel;
@@ -29,5 +30,10 @@ public class CustomMapperImpl implements CustomMapper {
 											menuId
 							);
 						}).toList();
+	}
+
+	@Override
+	public CartItem mapItemToCartItem(MenuItem item) {
+		return new CartItem(0, item);
 	}
 }

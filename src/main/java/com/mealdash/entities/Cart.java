@@ -1,6 +1,7 @@
 package com.mealdash.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,11 +18,23 @@ public class Cart {
 	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<CartItem> cartItems;
 
+	public Cart(User user, List<CartItem> cartItems) {
+		this.user = user;
+		this.cartItems = cartItems;
+	}
+
 	public Cart() {
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public void addItemToCartItems(CartItem item) {
+		if (cartItems == null) {
+			cartItems = new ArrayList<>();
+		}
+		cartItems.add(item);
 	}
 
 	public List<CartItem> getCartItems() {
