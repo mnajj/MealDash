@@ -20,17 +20,22 @@ public class MenuItem {
 	@Column(name = "size")
 	private String size;
 
+	@Column(name = "image_path")
+	private String imagePath;
+
 	@ManyToOne(fetch = FetchType.LAZY,
 					cascade = {CascadeType.DETACH, CascadeType.MERGE,
 									CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "menu_id")
 	private Menu menu;
 
-	public MenuItem(String name, int quantity, BigDecimal unitPrice, String size) {
+	public MenuItem(String name, int quantity, BigDecimal unitPrice, String size, String imagePath, Menu menu) {
 		this.name = name;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.size = size;
+		this.imagePath = imagePath;
+		this.menu = menu;
 	}
 
 	public MenuItem() {
@@ -70,5 +75,13 @@ public class MenuItem {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

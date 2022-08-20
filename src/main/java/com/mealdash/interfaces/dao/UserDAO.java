@@ -4,6 +4,6 @@ import com.mealdash.entities.User;
 
 import java.util.List;
 
-public interface CustomerDAO {
-	List<User> getAllCustomers();
+public interface UserDAO {
+	List<User> getAllUsers();
 }

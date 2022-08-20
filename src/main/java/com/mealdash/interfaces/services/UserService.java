@@ -4,6 +4,6 @@ import com.mealdash.entities.User;
 
 import java.util.List;
 
-public interface CustomerService {
-	List<User> getAllCustomers();
+public interface UserService {
+	List<User> getAllUsers();
 }
