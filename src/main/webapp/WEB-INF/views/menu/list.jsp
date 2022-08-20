@@ -84,6 +84,10 @@
 			the majority have
 		</p>
 		<c:forEach var="item" items="${items}">
+			<c:url var="addItemLink" value="/cart/addItem">
+				<c:param name="itemId" value="${item.id}"/>
+				<c:param name="menuId" value="${item.menuId}"/>
+			</c:url>
 			<div class="row layout_padding2">
 				<div class="col-md-8">
 					<div class="fruit_detail-box">
@@ -91,14 +95,15 @@
 								${item.name}
 						</h3>
 						<p class="mt-4 mb-5">
-							but the majority have suffered alteration in some form, by
-							injected humour, or randomised words which don't look even
-							slightly believable. If you are going to use a passage of Lorem
-							Ipsum, you need to be
+							The combination of the meaty, briny, vegetal flavors in this pizza hits so many satisfying notes that it
+							is sure to be a hit at your table.
+							<br><span class="item-sub-title">Price: ${item.unitPrice}</span>
+							<br><span class="item-sub-title">Available quantity: ${item.quantity}</span>
+							<br><span class="item-sub-title">Size: ${item.size}</span>
 						</p>
 						<div>
-							<a href="/menu/${item.unitPrice}" class="custom_dark-btn">
-								Menu
+							<a href="${addItemLink}" class="custom_dark-btn">
+								Add to Cart
 							</a>
 						</div>
 					</div>

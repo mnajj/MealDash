@@ -499,3 +499,10 @@ a:focus {
 }
 
 /* end footer section*/
+
+/* Custom */
+
+.item-sub-title {
+    font-weight: bold;
+    font-size: large;
+}
