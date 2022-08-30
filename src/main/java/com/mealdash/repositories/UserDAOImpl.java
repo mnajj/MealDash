@@ -28,9 +28,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserByUserName(String userName) {
 		var session = sessionFactory.getCurrentSession();
-		var user = session.get(User.class, id);
+		var user = session.
+						createQuery("from User where userName = :userName", User.class)
+						.setParameter("userName", userName)
+						.getSingleResult();
 		var cart = user.getCart();
 		return user;
 	}

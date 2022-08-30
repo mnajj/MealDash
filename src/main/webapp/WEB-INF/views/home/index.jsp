@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,11 +55,11 @@
 							<button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
 						</form>
 					</div>
-					<div class="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
-						<a href="">
-							Get A quote
-						</a>
-					</div>
+					<form:form action="/logout" method="post">
+						<div class="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
+							<input type="submit" value="Logout"/>
+						</div>
+					</form:form>
 				</div>
 			</nav>
 		</div>

@@ -3,6 +3,7 @@ package com.mealdash.controllers;
 import com.mealdash.interfaces.dao.CartDAO;
 import com.mealdash.interfaces.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,8 @@ public class CartController {
 	}
 
 	@GetMapping("/addItem")
-	public String addItemToCart(@RequestParam("itemId") int itemId, @RequestParam("menuId") int menuId) {
-		var user = userDAO.getUserById(1);
+	public String addItemToCart(Authentication auth, @RequestParam("itemId") int itemId, @RequestParam("menuId") int menuId) {
+		var user = userDAO.getUserByUserName(auth.getName());
 		var cart = user.getCart();
 		if (cart == null) {
 			cart = cartDAO.createNewCart(1);

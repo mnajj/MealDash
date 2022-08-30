@@ -16,7 +16,7 @@ public class Order {
 	@ManyToOne(fetch = FetchType.LAZY,
 					cascade = {CascadeType.DETACH, CascadeType.MERGE,
 									CascadeType.REFRESH, CascadeType.PERSIST})
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "username")
 	private User user;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 	private List<OrderDetails> orderDetails;

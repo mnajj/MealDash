@@ -29,6 +29,9 @@ public class OrderDetails {
 		this.quantity = quantity;
 	}
 
+	public OrderDetails() {
+	}
+
 	public OrderDetailsId getOrderDetailsId() {
 		return orderDetailsId;
 	}
