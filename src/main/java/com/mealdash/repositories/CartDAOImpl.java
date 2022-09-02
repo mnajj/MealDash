@@ -23,9 +23,12 @@ public class CartDAOImpl implements CartDAO {
 	}
 
 	@Override
-	public Cart createNewCart(int userId) {
+	public Cart createNewCart(String userName) {
 		var session = sessionFactory.getCurrentSession();
-		var user = session.get(User.class, userId);
+		var user = session
+						.createQuery("from User where userName = :userName", User.class)
+						.setParameter("userName", userName)
+						.getSingleResult();
 		var cart = new Cart();
 		cart.setUser(user);
 		session.save(cart);
@@ -35,13 +38,31 @@ public class CartDAOImpl implements CartDAO {
 	}
 
 	@Override
-	public void addItemToCart(int cartId, int itemId) {
+	public void addItemToCart(int cartId, int itemId, int quantity) {
 		var session = sessionFactory.getCurrentSession();
 		var cart = session.get(Cart.class, cartId);
 		var item = session.get(MenuItem.class, itemId);
 		var cartItem = customMapper.mapItemToCartItem(item);
-		// TODO
-		cartItem.setQuantity(0);
+		cartItem.setQuantity(quantity);
 		cart.addItemToCartItems(cartItem);
+	}
+
+	@Override
+	public Cart getUserCart(String userName) {
+		var session = sessionFactory.getCurrentSession();
+		var cart = session.
+						createQuery(
+										"SELECT c FROM Cart c LEFT JOIN FETCH c.cartItems where c.username = :userName",
+										Cart.class)
+						.setParameter("userName", userName)
+						.getSingleResult();
+		return cart;
+	}
+
+	@Override
+	public void deleteCartItem(int cartId, int itemId) {
+		var session = sessionFactory.getCurrentSession();
+		var cart = session.get(Cart.class, cartId);
+		cart.getCartItems().removeIf(i -> i.getId() == itemId);
 	}
 }

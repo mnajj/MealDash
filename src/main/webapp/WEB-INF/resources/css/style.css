@@ -41,6 +41,17 @@ body {
     border: 1px solid transparent;
 }
 
+.custom_red-btn {
+    display: inline-block;
+    padding: 10px 0;
+    text-align: center;
+    width: 145px;
+    outline: none;
+    color: #f7f7f7;
+    background-color: #f01e2c;
+    border: 1px solid transparent;
+}
+
 .custom_dark-btn {
     background-color: #000000;
 }

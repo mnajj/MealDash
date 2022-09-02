@@ -77,34 +77,37 @@
 			There are many variations of passages of Lorem Ipsum available, but
 			the majority have
 		</p>
-		<c:forEach var="item" items="${items}">
-			<c:url var="addItemLink" value="/cart/def-itm-qty">
+		<c:forEach var="item" items="${cart.cartItems}">
+			<c:url var="deleteCartItem" value="/cart/delete-cart-item">
+				<c:param name="cartId" value="${cart.id}"/>
 				<c:param name="itemId" value="${item.id}"/>
-				<c:param name="menuId" value="${item.menuId}"/>
 			</c:url>
 			<div class="row layout_padding2">
 				<div class="col-md-8">
 					<div class="fruit_detail-box">
 						<h3>
-								${item.name}
+								${item.menuItem.name}
 						</h3>
 						<p class="mt-4 mb-5">
 							The combination of the meaty, briny, vegetal flavors in this pizza hits so many satisfying notes that it
 							is sure to be a hit at your table.
-							<br><span class="item-sub-title">Price: ${item.unitPrice}</span>
+							<br><span class="item-sub-title">Price: ${item.menuItem.unitPrice}</span>
 							<br><span class="item-sub-title">Available quantity: ${item.quantity}</span>
-							<br><span class="item-sub-title">Size: ${item.size}</span>
+							<br><span class="item-sub-title">Size: ${item.menuItem.size}</span>
 						</p>
 						<div>
 							<a href="${addItemLink}" class="custom_dark-btn">
 								Add to Cart
+							</a>
+							<a href="${deleteCartItem}" class="custom_red-btn">
+								Delete
 							</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex justify-content-center align-items-center">
 					<div class="fruit_img-box d-flex justify-content-center align-items-center">
-						<img src="${item.imagePath}" alt="" class="" width="250px"/>
+						<img src="${item.menuItem.imagePath}" alt="" class="" width="250px"/>
 					</div>
 				</div>
 			</div>

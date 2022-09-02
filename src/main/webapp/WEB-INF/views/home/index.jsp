@@ -42,7 +42,7 @@
 								<a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="fruit.html"> Fruits</a>
+								<a class="nav-link" href="/cart/get-user-cart"> Cart</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="service.html"> Services </a>

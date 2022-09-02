@@ -12,7 +12,13 @@ public class Cart {
 	@Column(name = "cart_id")
 	private int id;
 
+
+	@Column(name = "username")
+	private String username;
+
+
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "cart")
+	@JoinColumn(referencedColumnName = "username")
 	private User user;
 
 	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -11,15 +11,13 @@ public class CartItem {
 	private int id;
 	@Column(name = "quantity")
 	private int quantity;
-	@ManyToOne(fetch = FetchType.LAZY,
-					cascade = {CascadeType.DETACH, CascadeType.MERGE,
-									CascadeType.REFRESH, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+					CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
-	
-	@OneToOne(fetch = FetchType.LAZY,
-					cascade = {CascadeType.DETACH, CascadeType.MERGE,
-									CascadeType.REFRESH, CascadeType.PERSIST})
+
+	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+					CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "menu_item_id")
 	private MenuItem menuItem;
 

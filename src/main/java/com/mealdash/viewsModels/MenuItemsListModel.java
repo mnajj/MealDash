@@ -8,6 +8,7 @@ public class MenuItemsListModel {
 	private String size;
 	private String imagePath;
 	private int menuId;
+	private int quantityInput;
 
 	public MenuItemsListModel(int id, String name, int quantity, String unitPrice, String size, String imagePath, int menuId) {
 		this.id = id;
@@ -20,6 +21,14 @@ public class MenuItemsListModel {
 	}
 
 	public MenuItemsListModel() {
+	}
+
+	public int getQuantityInput() {
+		return quantityInput;
+	}
+
+	public void setQuantityInput(int quantityInput) {
+		this.quantityInput = quantityInput;
 	}
 
 	public int getId() {
