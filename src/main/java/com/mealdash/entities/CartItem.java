@@ -5,12 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_item_id")
 	private int id;
+
 	@Column(name = "quantity")
 	private int quantity;
+
 	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "cart_id")
@@ -55,5 +58,9 @@ public class CartItem {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

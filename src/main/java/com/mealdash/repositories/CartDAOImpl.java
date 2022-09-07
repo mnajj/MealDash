@@ -1,12 +1,14 @@
 package com.mealdash.repositories;
 
 import com.mealdash.entities.Cart;
+import com.mealdash.entities.CartItem;
 import com.mealdash.entities.MenuItem;
 import com.mealdash.entities.User;
 import com.mealdash.interfaces.dao.CartDAO;
 import com.mealdash.interfaces.services.CustomMapper;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,7 @@ public class CartDAOImpl implements CartDAO {
 		var cart = session.get(Cart.class, cartId);
 		var item = session.get(MenuItem.class, itemId);
 		var cartItem = customMapper.mapItemToCartItem(item);
+		cartItem.getCart().setId(cartId);
 		cartItem.setQuantity(quantity);
 		cart.addItemToCartItems(cartItem);
 	}
@@ -60,9 +63,35 @@ public class CartDAOImpl implements CartDAO {
 	}
 
 	@Override
-	public void deleteCartItem(int cartId, int itemId) {
+	@Modifying
+	public void deleteCartItem(int cartId, int cartItemId) {
 		var session = sessionFactory.getCurrentSession();
-		var cart = session.get(Cart.class, cartId);
-		cart.getCartItems().removeIf(i -> i.getId() == itemId);
+		session.
+						createQuery(
+										"delete FROM CartItem c where id = :cartItemId")
+						.setParameter("cartItemId", cartItemId)
+						.executeUpdate();
 	}
+
+	@Override
+	public CartItem getCartItemById(int itemId) {
+
+		var session = sessionFactory.getCurrentSession();
+		var cartItem = session
+						.createQuery("SELECT i FROM CartItem i LEFT JOIN FETCH i.menuItem where i.id = :id", CartItem.class)
+						.setParameter("id", itemId)
+						.getSingleResult();
+		return cartItem;
+	}
+
+	@Override
+	public void updateCartItemQuantity(int itemId, int quantity) {
+		var session = sessionFactory.getCurrentSession();
+		session.
+						createQuery("UPDATE CartItem c set c.quantity=:qty where c.id=:id")
+						.setParameter("qty", quantity)
+						.setParameter("id", itemId)
+						.executeUpdate();
+	}
+
 }

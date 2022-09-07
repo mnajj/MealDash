@@ -1,5 +1,6 @@
 package com.mealdash.controllers;
 
+import com.mealdash.entities.CartItem;
 import com.mealdash.entities.MenuItem;
 import com.mealdash.interfaces.dao.CartDAO;
 import com.mealdash.interfaces.dao.ItemDAO;
@@ -71,10 +72,22 @@ public class CartController {
 	}
 
 	@GetMapping("/delete-cart-item")
-	public String deleteItemFromCart(
-					@RequestParam("cartId") int cartId,
-					@RequestParam("itemId") int itemId) {
-		cartDAO.deleteCartItem(cartId, itemId);
-		return "redirect:cart/cart-items";
+	public String deleteItemFromCart(@RequestParam("cartId") int cartId, @RequestParam("cartItemId") int cartItemId) {
+		cartDAO.deleteCartItem(cartId, cartItemId);
+		return "redirect:/cart/get-user-cart";
+	}
+
+
+	@GetMapping("update-item-qty")
+	public String redirectToQuantityPage(@RequestParam("itemId") int itemId, Model model) {
+		var item = cartDAO.getCartItemById(itemId);
+		model.addAttribute("item", item);
+		return "cart/cart-item-qty";
+	}
+
+	@PostMapping("update-new-qty")
+	public String updateItemQuantity(@ModelAttribute("item") CartItem cartItem) {
+		cartDAO.updateCartItemQuantity(cartItem.getId(), cartItem.getQuantity());
+		return "redirect:/cart/get-user-cart";
 	}
 }

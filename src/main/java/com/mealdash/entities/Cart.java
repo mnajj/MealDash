@@ -36,6 +36,10 @@ public class Cart {
 		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void addItemToCartItems(CartItem item) {
 		if (cartItems == null) {
 			cartItems = new ArrayList<>();

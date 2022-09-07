@@ -80,6 +80,9 @@
 		<c:forEach var="item" items="${cart.cartItems}">
 			<c:url var="deleteCartItem" value="/cart/delete-cart-item">
 				<c:param name="cartId" value="${cart.id}"/>
+				<c:param name="cartItemId" value="${item.id}"/>
+			</c:url>
+			<c:url var="updateItemQty" value="/cart/update-item-qty">
 				<c:param name="itemId" value="${item.id}"/>
 			</c:url>
 			<div class="row layout_padding2">
@@ -96,8 +99,8 @@
 							<br><span class="item-sub-title">Size: ${item.menuItem.size}</span>
 						</p>
 						<div>
-							<a href="${addItemLink}" class="custom_dark-btn">
-								Add to Cart
+							<a href="${updateItemQty}" class="custom_orange-btn">
+								Modify quantity
 							</a>
 							<a href="${deleteCartItem}" class="custom_red-btn">
 								Delete
