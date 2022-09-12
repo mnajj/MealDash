@@ -1,9 +1,6 @@
 package com.mealdash.repositories;
 
-import com.mealdash.entities.Cart;
-import com.mealdash.entities.CartItem;
-import com.mealdash.entities.MenuItem;
-import com.mealdash.entities.User;
+import com.mealdash.entities.*;
 import com.mealdash.interfaces.dao.CartDAO;
 import com.mealdash.interfaces.services.CustomMapper;
 import org.hibernate.SessionFactory;
@@ -11,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.HashMap;
 
 @Repository
 @Transactional
@@ -85,13 +85,54 @@ public class CartDAOImpl implements CartDAO {
 	}
 
 	@Override
-	public void updateCartItemQuantity(int itemId, int quantity) {
+	public void updateCartItemQuantity(CartItem cartItem) {
 		var session = sessionFactory.getCurrentSession();
-		session.
-						createQuery("UPDATE CartItem c set c.quantity=:qty where c.id=:id")
-						.setParameter("qty", quantity)
-						.setParameter("id", itemId)
-						.executeUpdate();
+		var item = session
+						.createQuery("from CartItem c where c.id=:id and c.cart.id=:cid", CartItem.class)
+						.setParameter("id", cartItem.getId())
+						.setParameter("cid", cartItem.getCart().getId())
+						.getSingleResult();
+		item.setQuantity(cartItem.getQuantity());
+		session.save(item);
 	}
 
+	@Override
+	public void checkOut(String userName, int cartId) {
+		var session = sessionFactory.getCurrentSession();
+		var user = session
+						.createQuery("from User u where u.userName=:usnm", User.class)
+						.setParameter("usnm", userName)
+						.getSingleResult();
+		var cart = user.getCart();
+
+		if (cart.getCartItems().isEmpty()) return;
+		var order = new Order();
+		order.setDate(new Date());
+		order.setUser(user);
+		session.save(order);
+		var id = order.getId();
+
+		var cartItemQty = new HashMap<Integer, Integer>();
+
+		for (var c : cart.getCartItems()) {
+			cartItemQty.put(c.getMenuItemId(), c.getQuantity());
+			var orderItem = new OrderDetails();
+			orderItem.setMenuItem(c.getMenuItem());
+			orderItem.setOrder(order);
+			orderItem.setQuantity(c.getQuantity());
+			orderItem.setOrderId(order.getId());
+			orderItem.setMenuItemId(c.getMenuItemId());
+			session.save(orderItem);
+			session.delete(c);
+		}
+		var menuItems = session
+						.createQuery("from MenuItem", MenuItem.class)
+						.getResultList();
+		for (var item : menuItems) {
+			if (cartItemQty.containsKey(item.getId())) {
+				item.setQuantity(item.getQuantity() - cartItemQty.get(item.getId()));
+				session.save(item);
+			}
+		}
+	}
 }

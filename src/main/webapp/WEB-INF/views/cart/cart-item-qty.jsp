@@ -85,7 +85,7 @@
 						The combination of the meaty, briny, vegetal flavors in this pizza hits so many satisfying notes that it
 						is sure to be a hit at your table.
 						<br><span class="item-sub-title">Price: ${item.menuItem.unitPrice}</span>
-						<%--						<br><span class="item-sub-title">Available quantity: ${item.quantity}</span>--%>
+						<%--						<br><span class="item-sub-title">Quantity: ${item.quantity}</span>--%>
 						<br><span class="item-sub-title">Size: ${item.menuItem.size}</span>
 					</p>
 					<div class="contact_form-container">
@@ -101,7 +101,7 @@
 								</p>
 
 								<p>
-									<form:hidden path=""/>
+									<form:hidden path="cart.id"/>
 								</p>
 								<p>
 									Quantity: <form:input path="quantity"/>

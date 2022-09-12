@@ -87,7 +87,13 @@ public class CartController {
 
 	@PostMapping("update-new-qty")
 	public String updateItemQuantity(@ModelAttribute("item") CartItem cartItem) {
-		cartDAO.updateCartItemQuantity(cartItem.getId(), cartItem.getQuantity());
+		cartDAO.updateCartItemQuantity(cartItem);
+		return "redirect:/cart/get-user-cart";
+	}
+
+	@GetMapping("checkout")
+	public String checkOut(Authentication auth, @RequestParam("cartId") int cartId) {
+		cartDAO.checkOut(auth.getName(), cartId);
 		return "redirect:/cart/get-user-cart";
 	}
 }

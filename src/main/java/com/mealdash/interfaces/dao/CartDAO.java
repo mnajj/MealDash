@@ -14,5 +14,7 @@ public interface CartDAO {
 
 	CartItem getCartItemById(int itemId);
 
-	void updateCartItemQuantity(int itemId, int quantity);
+	void updateCartItemQuantity(CartItem cartItem);
+
+	void checkOut(String userName, int cartId);
 }

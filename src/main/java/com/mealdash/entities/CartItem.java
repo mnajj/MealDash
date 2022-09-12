@@ -19,9 +19,11 @@ public class CartItem {
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
 
+	@Column(name = "menu_item_id")
+	private int menuItemId;
 	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.REFRESH, CascadeType.PERSIST})
-	@JoinColumn(name = "menu_item_id")
+	@JoinColumn(name = "menu_item_id", insertable = false, updatable = false)
 	private MenuItem menuItem;
 
 	public CartItem(int quantity, MenuItem menuItem) {
@@ -62,5 +64,13 @@ public class CartItem {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getMenuItemId() {
+		return menuItemId;
+	}
+
+	public void setMenuItemId(int menuItemId) {
+		this.menuItemId = menuItemId;
 	}
 }

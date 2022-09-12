@@ -17,6 +17,4 @@ public class Authority {
 
 	public Authority() {
 	}
-
-
 }

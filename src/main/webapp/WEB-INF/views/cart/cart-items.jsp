@@ -115,6 +115,11 @@
 				</div>
 			</div>
 		</c:forEach>
+
+		<c:url var="checkOutUserCart" value="/cart/checkout">
+			<c:param name="cartId" value="${cart.id}"/>
+		</c:url>
+		<a href="${checkOutUserCart}" value="Check out" class="custom_orange-btn"/>
 	</div>
 </section>
 

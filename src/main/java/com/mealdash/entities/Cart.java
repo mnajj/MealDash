@@ -11,17 +11,15 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_id")
 	private int id;
-
-
 	@Column(name = "username")
 	private String username;
 
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "cart")
-	@JoinColumn(referencedColumnName = "username")
+	@OneToOne
+	@JoinColumn(name = "username", insertable = false, updatable = false)
 	private User user;
 
-	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
 	private List<CartItem> cartItems;
 
 	public Cart(User user, List<CartItem> cartItems) {

@@ -25,8 +25,7 @@ public class User {
 	private String address;
 	@Column(name = "phone_number")
 	private String phoneNumber;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cart_id")
+	@OneToOne(mappedBy = "user")
 	private Cart cart;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Order> orders;
